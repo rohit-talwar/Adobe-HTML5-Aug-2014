@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="scripts/jquery-1.7.1.js"></script>
-	  <script src="scripts/yqlgeo.js"></script>
     <script>
-        jQuery(window).ready(function(){
-            jQuery("#btnInit").click(initiate_geolocation);
+       
+        window.addEventListener("DOMContentLoaded", function(){
+            document.getElementById("btnInit").addEventListener("click",initiate_geolocation);
         });
 
         function initiate_geolocation() {
@@ -25,15 +24,15 @@
                     position.coords.longitude + "&zoom=14&size=300x400&markers=color:blue|label:S|" +
                     position.coords.latitude + ',' + position.coords.longitude;
 
-		$("#map").remove();
-		$(document.body).append(
-			
-			$("<img>").attr("src", image_url).attr('id','map')
-		);
-        }
+        var imgNode = document.getElementById("map");
+		if (imgNode) imgNode.remove();
+        var img = document.createElement("img");
+        img.setAttribute("src",image_url);
+        img.setAttribute("id",'map');
+        document.body.appendChild(img);
+    }
 		
-		 function handle_errors(error)
-        {
+		 function handle_errors(error){
             switch(error.code)
             {
                 case error.PERMISSION_DENIED: alert("user did not share geolocation data");
